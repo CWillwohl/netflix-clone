@@ -1,9 +1,9 @@
-const API_KEY = '654fc809c7ba10483822b368a247ce32'
-const BASIC_URL = 'https://api.themoviedb.org/3'
+const API_KEY = '3a049488529131ffe44e5ecd90b2ca0d'
+const API_BASE = 'https://api.themoviedb.org/3'
 
 const basicFetch = async(endpoint) => {
-    const request = await fetch(`${BASIC_URL}${endpoint}`)
-    const json = request.json()
+    const req = await fetch(`${API_BASE}${endpoint}`)
+    const json = await req.json()
     return json
 }
 
@@ -17,7 +17,7 @@ export default {
             },
             {
                 slug: 'trending',
-                title: 'Recomendados para você',
+                title: 'Recomandados para você',
                 items: await basicFetch(`/trending/all/week?language=pt-BR&api_key=${API_KEY}`)
             },
             {
@@ -29,6 +29,11 @@ export default {
                 slug: 'action',
                 title: 'Ação',
                 items: await basicFetch(`/discover/movie?with_genres=28&language=pt-BR&api_key=${API_KEY}`)
+            },
+            {
+                slug: 'comedy',
+                title: 'Comédia',
+                items: await basicFetch(`/discover/movie?with_genres=35&language=pt-BR&api_key=${API_KEY}`)
             },
             {
                 slug: 'horror',
@@ -44,13 +49,13 @@ export default {
                 slug: 'documentary',
                 title: 'Documentários',
                 items: await basicFetch(`/discover/movie?with_genres=99&language=pt-BR&api_key=${API_KEY}`)
-            }
+            },
         ]
     },
     getMovieInfo: async (movieId, type) => {
         let info = {}
         if(movieId) {
-            switch(type){
+            switch(type) {
                 case 'movie':
                     info = await basicFetch(`/movie/${movieId}?language=pt-BR&api_key=${API_KEY}`)
                     break
